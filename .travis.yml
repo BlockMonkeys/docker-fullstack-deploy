@@ -26,10 +26,10 @@ deploy:
     provider: elasticbeanstalk
     region: "ap-northeast-2"
     app: "docker-fullstack-app"
-    env: Dockerfullstackapp-env
+    env: "Dockerfullstackapp-env"
     bucket_name: elasticbeanstalk-ap-northeast-2-665593300044
     bucket_path: "docker-fullstack-app"
-    on
+    on:
         branch: main
     
     access_key_id: $AWS_ACCESS_KEY
