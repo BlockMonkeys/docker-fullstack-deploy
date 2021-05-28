@@ -1,0 +1,23 @@
+language: generic
+
+sudo: required
+
+services:
+    - docker
+
+before_install:
+    - docker build -t blockmonkey/react-fullstack-test -f ./frontend/Dockerfile.dev ./frontend
+
+script:
+    - docker run -e CI=true react-fullstack-test npm run test
+
+after_success:
+    - docker build -t blockmonkey/docker-frontend ./frontend
+    - docker build -t blockmonkey/docker-backend ./backend
+    - docker build -t blockmonkey/docker-nginx ./nginx
+
+    - echo "$DOCKER_HUB_PASSWORD" | docker login -u "DOCKER_HUB_ID" --password-stdin
+
+    - docker push blockmonkey/docker-frontend
+    - docker push blockmonkey/docker-backend
+    - docker push blockmonkey/docker-nginx
